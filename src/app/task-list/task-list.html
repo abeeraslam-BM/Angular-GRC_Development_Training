@@ -1,0 +1,16 @@
+<input type="text" [(ngModel)]="newTaskTitle" placeholder="New task title" />
+
+<button (click)="addTask()">Add Task</button>
+
+@if(tasks.length === 0)
+{
+    <p>No tasks found</p>
+}
+@else {
+<ul>
+    @for(task of tasks; track task.id)
+    {
+        <app-task-item [task]="task" (toggle)="onToggle($event)"></app-task-item>
+    }
+</ul>
+}
