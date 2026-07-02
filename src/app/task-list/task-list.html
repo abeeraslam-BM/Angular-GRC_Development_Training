@@ -1,16 +1,41 @@
 <input type="text" [(ngModel)]="newTaskTitle" placeholder="New task title" />
 
+<select [(ngModel)]="newTaskPriority">
+  <option value="Low">Low</option>
+  <option value="Medium">Medium</option>
+  <option value="High">High</option>
+</select>
+
 <button (click)="addTask()">Add Task</button>
 
-@if(tasks.length === 0)
-{
-    <p>No tasks found</p>
+@if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
 }
-@else {
-<ul>
-    @for(task of tasks; track task.id)
-    {
-        <app-task-item [task]="task" (toggle)="onToggle($event)"></app-task-item>
+
+@if (loading) {
+  <p>Loading tasks...</p>
+}
+
+@if (tasks$ | async; as tasks) {
+  @if (!loading) {
+    @if (tasks.length === 0) {
+      <p>No tasks found</p>
+    } @else {
+      <ul>
+        @for (task of tasks; track task.id) {
+          <li  style="margin-bottom: 50px;">
+            <app-task-item [task]="task" (toggle)="onToggle(task.id)"></app-task-item>
+
+            <select [ngModel]="task.priority" (ngModelChange)="updatePriority(task, $event)">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+
+            <button (click)="deleteTask(task.id)">Delete</button>
+          </li>
+        }
+      </ul>
     }
-</ul>
+  }
 }

@@ -1,12 +1,13 @@
 import { Component,Input, Output} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Task } from '../models/task.model';
 
 
 @Component({
   selector: 'app-task-item',
-  imports: [FormsModule],
+  imports: [FormsModule,DatePipe],
   templateUrl: './task-item.html',
   styleUrl: './task-item.scss',
 })

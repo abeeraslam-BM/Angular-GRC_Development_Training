@@ -1,7 +1,30 @@
-<li (click)="onToggle()">
-  {{task.title}}
-  @if(task.completed)
-  {
-    <span>[Completed]</span>
+<div class="task-item" [class.completed]="task.completed">
+  <label class="task-toggle">
+    <input
+      type="checkbox"
+      [checked]="task.completed"
+      (change)="onToggle()"
+    />
+    <strong>{{ task.title }}</strong>
+  </label>
+
+  @if (task.description) {
+    <p class="task-description">{{ task.description }}</p>
   }
-</li>
+
+  <div class="task-meta">
+    <!-- <span class="task-id">#{{ task.id }}</span>
+
+    <span class="task-priority" [attr.data-priority]="task.priority">
+      {{ task.priority }}
+    </span> -->
+
+    @if (task.dueDate) {
+      <span class="task-due">Due: {{ task.dueDate | date:'mediumDate' }}</span>
+    }
+
+    <!-- <span class="task-status">
+      {{ task.completed ? 'Completed' : 'Not completed' }}
+    </span> -->
+  </div>
+</div>
